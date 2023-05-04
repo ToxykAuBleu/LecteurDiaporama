@@ -7,11 +7,16 @@ Lecteur::Lecteur()
 
 void Lecteur::avancer()
 {
-
+    if (numDiaporamaCourant() > 0) {
+        _posImageCourante = (_posImageCourante+1) % nbImages();
+    }
 }
 
 void Lecteur::reculer()
 {
+    if (numDiaporamaCourant() > 0) {
+        _posImageCourante = (_posImageCourante-1) % nbImages();
+    }
 }
 
 void Lecteur::changerDiaporama(unsigned int pNumDiaporama)
@@ -47,6 +52,17 @@ void Lecteur::chargerDiaporama()
 
      // trier le contenu du diaporama par ordre croissant selon le rang de l'image dans le diaporama
 	 // A FAIRE
+    int n = _diaporama.size();
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (_diaporama[j]->getRang() > _diaporama[j + 1]->getRang()) {
+                // swap v[j] and v[j+1]
+                Image* temp = _diaporama[j];
+                _diaporama[j] = _diaporama[j + 1];
+                _diaporama[j + 1] = temp;
+            }
+        }
+    }
 	 
      _posImageCourante = 0;
 
@@ -78,6 +94,18 @@ void Lecteur::afficher()
      * 1) vide (si num. de diaporama = 0) OU BIEN  numéro de diaporama affiché
      * 2) Si un diaporama courant est chargé (num. de diaporama > 0), affiche l'image courante OU BIEN 'diaporama vide'
      *     si ce diaporama n'a aucun image */
+    if (_numDiaporamaCourant == 0) { cout << "Lecteur vide !" << endl; }
+    else {
+        cout << "Diaporama num. " << numDiaporamaCourant() << " selectionne." << endl;
+        if (nbImages() > 0) {
+            Image* img = imageCourante();
+            cout << "Image courante: ";
+            img->afficher();
+            cout << endl;
+        } else {
+            cout << "Diaporama vide !" << endl;
+        }
+    }
 }
 
 unsigned int Lecteur::nbImages()
@@ -87,10 +115,14 @@ unsigned int Lecteur::nbImages()
 
 Image *Lecteur::imageCourante()
 {
-    return nullptr;
+    if (nbImages() == 0 || numDiaporamaCourant() == 0) {
+        return nullptr;
+    } else {
+        return _diaporama[_posImageCourante];
+    }
 }
 
 unsigned int Lecteur::numDiaporamaCourant()
 {
-    return 0;
+    return _numDiaporamaCourant;
 }

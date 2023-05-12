@@ -1,7 +1,7 @@
 #include "lecteurvue.h"
 #include "ui_lecteurvue.h"
 #include <QDebug>
-
+#include <QMessageBox>
 LecteurVue::LecteurVue(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::LecteurVue)
@@ -14,6 +14,8 @@ LecteurVue::LecteurVue(QWidget *parent)
     connect(ui->bLancerDiapo, SIGNAL(clicked()), this, SLOT(demarrerDiapo()));
     connect(ui->bSuivant, SIGNAL(clicked()), this, SLOT(suivant()));
     connect(ui->bPrecedent, SIGNAL(clicked()), this, SLOT(precedent()));
+    connect(ui->actionA_propos_de, SIGNAL(triggered()), this, SLOT(apropos()));
+    connect(ui->actionQuitter, SIGNAL(triggered()),this, SLOT(quitter));
 }
 
 LecteurVue::~LecteurVue() {
@@ -46,6 +48,16 @@ void LecteurVue::suivant() {
 void LecteurVue::precedent() {
     qDebug() << "Image précedente" << Qt::endl;
 }
+
+void LecteurVue::apropos() {
+    QMessageBox msgBox;
+    msgBox.setText("La version du diaporama est/n"
+                   "Les auteurs sont/n"
+                   "La date de création est le");
+    msgBox.exec();
+}
+
+
 
 /* Pour afficher tous les élements présent dans l'ui.
     ui->bLancerDiapo->show();

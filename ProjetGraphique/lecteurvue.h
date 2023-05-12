@@ -22,7 +22,7 @@ public slots:
     void precedent(); // Affiche l'image précedente dans le diaporama
     void demarrerDiapo(); // Passe le diaporama en mode automatique
     void arreterDiapo(); // Passe le diaporama en mode manuel
-
+    void afficherImageCourante(); // Affiche l'image courant du lecteur sur l'interface graphique
 
 private:
     Ui::LecteurVue *ui;

@@ -42,6 +42,10 @@ void Lecteur::chargerDiaporama()
     Image* imageACharger;
     imageACharger = new Image(1, "chateau", "Chateau Disney", "://cartesDisney/Disney_0.gif");
     _diaporama.push_back(imageACharger);
+    imageACharger = new Image(2, "animaux", "Les 101 Dalmatiens", "://cartesDisney/Disney_1.gif");
+    _diaporama.push_back(imageACharger);
+    imageACharger = new Image(3, "personne", "Cendrillon", "://cartesDisney/Disney_2.gif");
+    _diaporama.push_back(imageACharger);
 
      // trier le contenu du diaporama par ordre croissant selon le rang de l'image dans le diaporama
 	 // A FAIRE

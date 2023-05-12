@@ -1,6 +1,7 @@
 #ifndef LECTEURVUE_H
 #define LECTEURVUE_H
 
+#include "lecteur.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -25,5 +26,6 @@ public slots:
 
 private:
     Ui::LecteurVue *ui;
+    Lecteur _lecteur;
 };
 #endif // LECTEURVUE_H

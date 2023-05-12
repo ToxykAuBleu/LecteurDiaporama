@@ -1,4 +1,5 @@
 #include "lecteurvue.h"
+#include "lecteur.h"
 #include "ui_lecteurvue.h"
 #include <QDebug>
 
@@ -23,6 +24,9 @@ LecteurVue::~LecteurVue() {
 void LecteurVue::chargerDiaporama() {
     qDebug() << "Je charge la diaporama." << Qt::endl;
     ui->statusbar->showMessage("Mode: Manuel");
+    _lecteur.changerDiaporama(1);
+    QString lien = QString::fromStdString(_lecteur.imageCourante()->getChemin());
+    ui->image->setPixmap(QPixmap(lien));
 }
 
 void LecteurVue::demarrerDiapo() {

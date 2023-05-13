@@ -25,12 +25,13 @@ public slots:
     void arreterDiapo(); // Passe le diaporama en mode manuel
     void apropos(); //Ouvre boite de dialogue contenant les informations sur le diapo
     void afficherImageCourante(); // Affiche l'image courant du lecteur sur l'interface graphique
+    void quitter();// Quitter la diapo
 
 private:
     Ui::LecteurVue *ui;
-    const std::string version = "v2";
-    const std::string auteurs = "Virgile, Mathieu, Adrien";
-    const std::string date = "12/05/2023";
+    const char* auteurs = "Virgile, Adrien, Mathieu";
+    const char* date = "13/05/2023";
+    const char* version = "V2";
     Lecteur _lecteur;
 };
 #endif // LECTEURVUE_H

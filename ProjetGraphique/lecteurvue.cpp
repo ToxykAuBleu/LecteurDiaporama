@@ -16,7 +16,7 @@ LecteurVue::LecteurVue(QWidget *parent)
     connect(ui->bSuivant, SIGNAL(clicked()), this, SLOT(suivant()));
     connect(ui->bPrecedent, SIGNAL(clicked()), this, SLOT(precedent()));
     connect(ui->actionA_propos_de, SIGNAL(triggered()), this, SLOT(apropos()));
-    connect(ui->actionQuitter, SIGNAL(triggered()),this, SLOT(quitter));
+    connect(ui->actionQuitter, SIGNAL(triggered()), this, SLOT(quitter()));
 }
 
 LecteurVue::~LecteurVue() {
@@ -64,13 +64,15 @@ void LecteurVue::afficherImageCourante() {
 }
 
 void LecteurVue::apropos() {
-    QMessageBox msgBox;
-    msgBox.setText("La version du diaporama est/n"
-                   "Les auteurs sont/n"
-                   "La date de création est le");
-    msgBox.exec();
+    QString message = "Les auteurs sont :"+ QString::fromUtf8(auteurs) +"\n";
+    message += "La date de création est le :"+ QString::fromUtf8(date) +"\n";
+    message += "La version du diaporama est la :"+ QString::fromUtf8(version);
+    QMessageBox::information(this, "Information", message);
 }
 
+void LecteurVue::quitter() {
+    QApplication::quit();
+}
 
 
 /* Pour afficher tous les élements présent dans l'ui.

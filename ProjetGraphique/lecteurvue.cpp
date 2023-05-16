@@ -8,9 +8,12 @@ LecteurVue::LecteurVue(QWidget *parent)
     , ui(new Ui::LecteurVue)
 {
     ui->setupUi(this);
-    this->setFixedSize(this->size());
-    //ui->statusbar->showMessage("Mode: Non chargé");
+    this->layout()->setSizeConstraint(QLayout::SetFixedSize);
 
+    // StatusBar
+    majStatusBar(false);
+
+    // Connexion des éléments de l'ui
     connect(ui->actionCharger_diaporama, SIGNAL(triggered()), this, SLOT(chargerDiaporama()));
     connect(ui->bArretDiapo, SIGNAL(clicked()), this, SLOT(arreterDiapo()));
     connect(ui->bLancerDiapo, SIGNAL(clicked()), this, SLOT(demarrerDiapo()));
@@ -34,14 +37,13 @@ void LecteurVue::demarrerDiapo() {
     qDebug() << "Démarrage du diaporama" << Qt::endl;
     ui->bArretDiapo->setEnabled(true);
     ui->bLancerDiapo->setEnabled(false);
-    ui->statusbar->showMessage("Mode: Automatique");
+    majStatusBar(true);
 }
 
 void LecteurVue::arreterDiapo() {
     qDebug() << "Arrêt du diaporama" << Qt::endl;
     ui->bLancerDiapo->setEnabled(true);
     ui->bArretDiapo->setEnabled(false);
-    ui->statusbar->showMessage("Mode: Manuel");
 }
 
 void LecteurVue::suivant() {
@@ -71,3 +73,19 @@ void LecteurVue::apropos() {
     QMessageBox::information(this, "Information", message);
 }
 
+void LecteurVue::majStatusBar(bool estCharge, unsigned int rangCourant) {
+    if (!estCharge) {
+        mode = new QLabel("Mode: Non chargé");
+        rang = new QLabel("Rang");
+    } else {
+        mode = new QLabel("Mode: Manuel");
+        rang = new QLabel("Rang: "  + QString::number(rangCourant) + "/x");
+    }
+    mode->setAlignment(Qt::AlignLeft);
+    rang->setAlignment(Qt::AlignRight);
+
+    ui->statusbar->removeWidget(mode);
+    ui->statusbar->removeWidget(rang);
+    ui->statusbar->addWidget(mode, 1);
+    ui->statusbar->addWidget(rang, 0);
+}

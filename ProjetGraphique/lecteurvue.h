@@ -25,7 +25,6 @@ public slots:
     void arreterDiapo(); // Passe le diaporama en mode manuel
     void apropos(); //Ouvre boite de dialogue contenant les informations sur le diapo
     void afficherImageCourante(); // Affiche l'image courant du lecteur sur l'interface graphique
-    void quitter();// Quitter la diapo
 
 private:
     Ui::LecteurVue *ui;

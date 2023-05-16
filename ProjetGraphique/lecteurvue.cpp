@@ -8,6 +8,7 @@ LecteurVue::LecteurVue(QWidget *parent)
     , ui(new Ui::LecteurVue)
 {
     ui->setupUi(this);
+    this->setFixedSize(this->size());
     //ui->statusbar->showMessage("Mode: Non chargé");
 
     connect(ui->actionCharger_diaporama, SIGNAL(triggered()), this, SLOT(chargerDiaporama()));
@@ -16,7 +17,7 @@ LecteurVue::LecteurVue(QWidget *parent)
     connect(ui->bSuivant, SIGNAL(clicked()), this, SLOT(suivant()));
     connect(ui->bPrecedent, SIGNAL(clicked()), this, SLOT(precedent()));
     connect(ui->actionA_propos_de, SIGNAL(triggered()), this, SLOT(apropos()));
-    connect(ui->actionQuitter, SIGNAL(triggered()), this, SLOT(quitter()));
+    connect(ui->actionQuitter, SIGNAL(triggered()), QCoreApplication::instance(), SLOT(quit()), Qt::QueuedConnection);
 }
 
 LecteurVue::~LecteurVue() {
@@ -64,35 +65,9 @@ void LecteurVue::afficherImageCourante() {
 }
 
 void LecteurVue::apropos() {
-    QString message = "Les auteurs sont :"+ QString::fromUtf8(auteurs) +"\n";
-    message += "La date de création est le :"+ QString::fromUtf8(date) +"\n";
-    message += "La version du diaporama est la :"+ QString::fromUtf8(version);
+    QString message = "Les auteurs sont : "+ QString::fromUtf8(auteurs) +"\n";
+    message += "La date de création du projet est le : "+ QString::fromUtf8(date) +"\n";
+    message += "La version du diaporama est la : "+ QString::fromUtf8(version);
     QMessageBox::information(this, "Information", message);
 }
 
-void LecteurVue::quitter() {
-    QApplication::quit();
-}
-
-
-/* Pour afficher tous les élements présent dans l'ui.
-    ui->bLancerDiapo->show();
-    ui->bPrecedent->show();
-    ui->bSuivant->show();
-    ui->bArretDiapo->show();
-    ui->categorie->show();
-    ui->titreDiapo->show();
-    ui->titreImage->show();
-    ui->image->show();
-*/
-
-/* Pour cacher tous les éléments présent dans l'ui.
-    ui->bLancerDiapo->hide();
-    ui->bPrecedent->hide();
-    ui->bSuivant->hide();
-    ui->bArretDiapo->hide();
-    ui->categorie->hide();
-    ui->titreDiapo->hide();
-    ui->titreImage->hide();
-    ui->image->hide();
-*/

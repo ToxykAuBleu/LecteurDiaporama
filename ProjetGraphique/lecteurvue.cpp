@@ -11,7 +11,13 @@ LecteurVue::LecteurVue(QWidget *parent)
     this->layout()->setSizeConstraint(QLayout::SetFixedSize);
 
     // StatusBar
+    mode = new QLabel();
+    rang = new QLabel();
     majStatusBar(false);
+    mode->setAlignment(Qt::AlignLeft);
+    rang->setAlignment(Qt::AlignRight);
+    ui->statusbar->addWidget(mode, 1);
+    ui->statusbar->addWidget(rang, 0);
 
     // Connexion des éléments de l'ui
     connect(ui->actionCharger_diaporama, SIGNAL(triggered()), this, SLOT(chargerDiaporama()));
@@ -28,9 +34,9 @@ LecteurVue::~LecteurVue() {
 }
 
 void LecteurVue::chargerDiaporama() {
-    ui->statusbar->showMessage("Mode: Manuel");
     _lecteur.changerDiaporama(1);
     afficherImageCourante();
+    majStatusBar(true);
 }
 
 void LecteurVue::demarrerDiapo() {
@@ -49,11 +55,13 @@ void LecteurVue::arreterDiapo() {
 void LecteurVue::suivant() {
     _lecteur.avancer();
     afficherImageCourante();
+    majStatusBar(true);
 }
 
 void LecteurVue::precedent() {
     _lecteur.reculer();
     afficherImageCourante();
+    majStatusBar(true);
 }
 
 void LecteurVue::afficherImageCourante() {
@@ -73,19 +81,12 @@ void LecteurVue::apropos() {
     QMessageBox::information(this, "Information", message);
 }
 
-void LecteurVue::majStatusBar(bool estCharge, unsigned int rangCourant) {
+void LecteurVue::majStatusBar(bool estCharge) {
     if (!estCharge) {
-        mode = new QLabel("Mode: Non chargé");
-        rang = new QLabel("Rang");
+        mode->setText("Mode: Non chargé");
+        rang->setText("");
     } else {
-        mode = new QLabel("Mode: Manuel");
-        rang = new QLabel("Rang: "  + QString::number(rangCourant) + "/x");
+        mode->setText("Mode: Manuel");
+        rang->setText("Rang: "  + QString::number(_lecteur.imageCourante()->getRang()) + "/" + QString::number(_lecteur.nbImages()));
     }
-    mode->setAlignment(Qt::AlignLeft);
-    rang->setAlignment(Qt::AlignRight);
-
-    ui->statusbar->removeWidget(mode);
-    ui->statusbar->removeWidget(rang);
-    ui->statusbar->addWidget(mode, 1);
-    ui->statusbar->addWidget(rang, 0);
 }

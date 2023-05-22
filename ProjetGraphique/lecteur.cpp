@@ -15,7 +15,11 @@ void Lecteur::avancer()
 void Lecteur::reculer()
 {
     if (numDiaporamaCourant() > 0) {
-        _posImageCourante = (_posImageCourante-1) % nbImages();
+        if (_posImageCourante == 0) {
+            _posImageCourante = nbImages()-1;
+        } else {
+            _posImageCourante = (_posImageCourante-1) % nbImages();
+        }
     }
 }
 
@@ -47,8 +51,7 @@ void Lecteur::chargerDiaporama()
     imageACharger = new Image(3, "personne", "Cendrillon", "://cartesDisney/Disney_2.gif");
     _diaporama.push_back(imageACharger);
 
-     // trier le contenu du diaporama par ordre croissant selon le rang de l'image dans le diaporama
-	 // A FAIRE
+    // trier le contenu du diaporama par ordre croissant selon le rang de l'image dans le diaporama
     int n = _diaporama.size();
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {

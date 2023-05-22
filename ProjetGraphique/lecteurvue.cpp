@@ -3,6 +3,7 @@
 #include "ui_lecteurvue.h"
 #include <QDebug>
 #include <QMessageBox>
+
 LecteurVue::LecteurVue(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::LecteurVue)
@@ -13,11 +14,14 @@ LecteurVue::LecteurVue(QWidget *parent)
     // StatusBar
     mode = new QLabel();
     rang = new QLabel();
-    majStatusBar(false);
+    majStatusBar();
     mode->setAlignment(Qt::AlignLeft);
     rang->setAlignment(Qt::AlignRight);
     ui->statusbar->addWidget(mode, 1);
     ui->statusbar->addWidget(rang, 0);
+
+    // Timer
+    timer.setInterval(3000);
 
     // Connexion des éléments de l'ui
     connect(ui->actionCharger_diaporama, SIGNAL(triggered()), this, SLOT(chargerDiaporama()));
@@ -27,6 +31,7 @@ LecteurVue::LecteurVue(QWidget *parent)
     connect(ui->bPrecedent, SIGNAL(clicked()), this, SLOT(precedent()));
     connect(ui->actionA_propos_de, SIGNAL(triggered()), this, SLOT(apropos()));
     connect(ui->actionQuitter, SIGNAL(triggered()), QCoreApplication::instance(), SLOT(quit()), Qt::QueuedConnection);
+    connect(&timer, SIGNAL(timeout()), this, SLOT(suivant()));
 }
 
 LecteurVue::~LecteurVue() {
@@ -36,32 +41,38 @@ LecteurVue::~LecteurVue() {
 void LecteurVue::chargerDiaporama() {
     _lecteur.changerDiaporama(1);
     afficherImageCourante();
-    majStatusBar(true);
+    etat = manuel;
+    majStatusBar();
 }
 
 void LecteurVue::demarrerDiapo() {
     qDebug() << "Démarrage du diaporama" << Qt::endl;
     ui->bArretDiapo->setEnabled(true);
     ui->bLancerDiapo->setEnabled(false);
-    majStatusBar(true);
+    etat = automatique;
+    timer.start();
+    majStatusBar();
 }
 
 void LecteurVue::arreterDiapo() {
     qDebug() << "Arrêt du diaporama" << Qt::endl;
     ui->bLancerDiapo->setEnabled(true);
     ui->bArretDiapo->setEnabled(false);
+    etat = manuel;
+    timer.stop();
+    majStatusBar();
 }
 
 void LecteurVue::suivant() {
     _lecteur.avancer();
     afficherImageCourante();
-    majStatusBar(true);
+    majStatusBar();
 }
 
 void LecteurVue::precedent() {
     _lecteur.reculer();
     afficherImageCourante();
-    majStatusBar(true);
+    majStatusBar();
 }
 
 void LecteurVue::afficherImageCourante() {
@@ -81,12 +92,15 @@ void LecteurVue::apropos() {
     QMessageBox::information(this, "Information", message);
 }
 
-void LecteurVue::majStatusBar(bool estCharge) {
-    if (!estCharge) {
+void LecteurVue::majStatusBar() {
+    if (etat == nonCharge) {
         mode->setText("Mode: Non chargé");
         rang->setText("");
-    } else {
+    } else if (etat == manuel) {
         mode->setText("Mode: Manuel");
-        rang->setText("Rang: "  + QString::number(_lecteur.imageCourante()->getRang()) + "/" + QString::number(_lecteur.nbImages()));
+        rang->setText("Rang: " + QString::number(_lecteur.imageCourante()->getRang()) + "/" + QString::number(_lecteur.nbImages()));
+    } else {
+        mode->setText("Mode : Automatique");
+        rang->setText("Rang: " + QString::number(_lecteur.imageCourante()->getRang()) + "/" + QString::number(_lecteur.nbImages()));
     }
 }

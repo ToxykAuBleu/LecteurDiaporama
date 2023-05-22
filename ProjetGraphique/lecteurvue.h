@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include "lecteur.h"
 #include <QMainWindow>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class LecteurVue; }
@@ -17,16 +18,6 @@ public:
     LecteurVue(QWidget *parent = nullptr);
     ~LecteurVue();
 
-public slots:
-    void chargerDiaporama(); // Charge le diaporama
-    void suivant(); // Affiche l'image suivante dans le diaporama
-    void precedent(); // Affiche l'image précedente dans le diaporama
-    void demarrerDiapo(); // Passe le diaporama en mode automatique
-    void arreterDiapo(); // Passe le diaporama en mode manuel
-    void apropos(); //Ouvre boite de dialogue contenant les informations sur le diapo
-    void afficherImageCourante(); // Affiche l'image courant du lecteur sur l'interface graphique
-    void majStatusBar(bool); // Met à jour la status bar de l'application.
-
 private:
     Ui::LecteurVue *ui;
     const char* auteurs = "Virgile, Adrien, Mathieu";
@@ -35,5 +26,19 @@ private:
     Lecteur _lecteur;
     QLabel *mode;
     QLabel *rang;
+    enum EtatLecteur {nonCharge, manuel, automatique};
+    EtatLecteur etat = nonCharge;
+    QTimer timer;
+
+public slots:
+    void chargerDiaporama(); // Charge le diaporama
+    void suivant(); // Affiche l'image suivante dans le diaporama
+    void precedent(); // Affiche l'image précedente dans le diaporama
+    void demarrerDiapo(); // Passe le diaporama en mode automatique
+    void arreterDiapo(); // Passe le diaporama en mode manuel
+    void apropos(); //Ouvre boite de dialogue contenant les informations sur le diapo
+    void afficherImageCourante(); // Affiche l'image courant du lecteur sur l'interface graphique
+    void majStatusBar(); // Met à jour la status bar de l'application.
 };
+
 #endif // LECTEURVUE_H

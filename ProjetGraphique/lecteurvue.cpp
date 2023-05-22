@@ -21,14 +21,14 @@ LecteurVue::LecteurVue(QWidget *parent)
     ui->statusbar->addWidget(rang, 0);
 
     // Timer
-    timer.setInterval(3000);
+    timer.setInterval(2000);
 
     // Connexion des éléments de l'ui
     connect(ui->actionCharger_diaporama, SIGNAL(triggered()), this, SLOT(chargerDiaporama()));
     connect(ui->bArretDiapo, SIGNAL(clicked()), this, SLOT(arreterDiapo()));
     connect(ui->bLancerDiapo, SIGNAL(clicked()), this, SLOT(demarrerDiapo()));
-    connect(ui->bSuivant, SIGNAL(clicked()), this, SLOT(suivant()));
-    connect(ui->bPrecedent, SIGNAL(clicked()), this, SLOT(precedent()));
+    connect(ui->bSuivant, SIGNAL(clicked()), this, SLOT(suivantClic()));
+    connect(ui->bPrecedent, SIGNAL(clicked()), this, SLOT(precedentClic()));
     connect(ui->actionA_propos_de, SIGNAL(triggered()), this, SLOT(apropos()));
     connect(ui->actionQuitter, SIGNAL(triggered()), QCoreApplication::instance(), SLOT(quit()), Qt::QueuedConnection);
     connect(&timer, SIGNAL(timeout()), this, SLOT(suivant()));
@@ -46,17 +46,19 @@ void LecteurVue::chargerDiaporama() {
 }
 
 void LecteurVue::demarrerDiapo() {
-    qDebug() << "Démarrage du diaporama" << Qt::endl;
     ui->bArretDiapo->setEnabled(true);
-    ui->bLancerDiapo->setEnabled(false);
+
+    while (_lecteur.imageCourante()->getRang() != 1)
+    {
+        suivant();
+    }
+
     etat = automatique;
     timer.start();
     majStatusBar();
 }
 
 void LecteurVue::arreterDiapo() {
-    qDebug() << "Arrêt du diaporama" << Qt::endl;
-    ui->bLancerDiapo->setEnabled(true);
     ui->bArretDiapo->setEnabled(false);
     etat = manuel;
     timer.stop();
@@ -69,10 +71,24 @@ void LecteurVue::suivant() {
     majStatusBar();
 }
 
-void LecteurVue::precedent() {
+void LecteurVue::suivantClic() {
+    _lecteur.avancer();
+    afficherImageCourante();
+    if (etat == automatique) {
+        arreterDiapo();
+    } else {
+        majStatusBar();
+    }
+}
+
+void LecteurVue::precedentClic() {
     _lecteur.reculer();
     afficherImageCourante();
-    majStatusBar();
+    if (etat == automatique) {
+        arreterDiapo();
+    } else {
+        majStatusBar();
+    }
 }
 
 void LecteurVue::afficherImageCourante() {

@@ -22,7 +22,7 @@ private:
     Ui::LecteurVue *ui;
     const char* auteurs = "Virgile, Adrien, Mathieu";
     const char* date = "03/04/2023";
-    const char* version = "V2";
+    const char* version = "V3";
     Lecteur _lecteur;
     QLabel *mode;
     QLabel *rang;
@@ -33,7 +33,8 @@ private:
 public slots:
     void chargerDiaporama(); // Charge le diaporama
     void suivant(); // Affiche l'image suivante dans le diaporama
-    void precedent(); // Affiche l'image précedente dans le diaporama
+    void suivantClic();// Affiche l'image suivante dans le diaporama, considérant un clic de l'utilisateur sur "suivant"
+    void precedentClic(); // Affiche l'image précedente dans le diaporama, considérant un clic de l'utilisateur sur "précédent"
     void demarrerDiapo(); // Passe le diaporama en mode automatique
     void arreterDiapo(); // Passe le diaporama en mode manuel
     void apropos(); //Ouvre boite de dialogue contenant les informations sur le diapo

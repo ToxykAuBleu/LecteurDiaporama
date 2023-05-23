@@ -55,6 +55,7 @@ void LecteurVue::enleverDiaporama() {
 }
 
 void LecteurVue::demarrerDiapo() {
+    ui->bArretDiapo->setEnabled(true);
 
     while (_lecteur.imageCourante()->getRang() != 1)
     {
@@ -63,12 +64,10 @@ void LecteurVue::demarrerDiapo() {
 
     etat = automatique;
     majStatusBar();
-    ui->bArretDiapo->setEnabled(false);
     timer.start();
 }
 
 void LecteurVue::arreterDiapo() {
-    ui->bArretDiapo->setEnabled(false);
     etat = manuel;
     majStatusBar();
 }
@@ -76,27 +75,25 @@ void LecteurVue::arreterDiapo() {
 void LecteurVue::suivant() {
     _lecteur.avancer();
     afficherImageCourante();
-    majStatusBar();
+    rang->setText("Rang: " + QString::number(_lecteur.imageCourante()->getRang()) + "/" + QString::number(_lecteur.nbImages()));
 }
 
 void LecteurVue::suivantClic() {
     _lecteur.avancer();
     afficherImageCourante();
     if (etat == automatique) {
-        arreterDiapo();
-    } else {
-        majStatusBar();
+        etat = manuel;
     }
+    majStatusBar();
 }
 
 void LecteurVue::precedentClic() {
     _lecteur.reculer();
     afficherImageCourante();
     if (etat == automatique) {
-        arreterDiapo();
-    } else {
-        majStatusBar();
+        etat = manuel;
     }
+    majStatusBar();
 }
 
 void LecteurVue::afficherImageCourante() {

@@ -25,6 +25,9 @@
         <property name="text">
          <string>Arrêter le diaporama</string>
         </property>
+        <property name="autoDefault">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -41,6 +44,9 @@
        <widget class="QPushButton" name="bLancerDiapo">
         <property name="text">
          <string>Lancer le diaporama</string>
+        </property>
+        <property name="autoDefault">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -142,6 +148,9 @@
         <property name="text">
          <string>Précédent</string>
         </property>
+        <property name="autoDefault">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -151,6 +160,9 @@
         </property>
         <property name="text">
          <string>Suivant</string>
+        </property>
+        <property name="autoDefault">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

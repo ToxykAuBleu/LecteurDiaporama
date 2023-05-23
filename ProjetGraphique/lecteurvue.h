@@ -22,7 +22,7 @@ private:
     Ui::LecteurVue *ui;
     const char* auteurs = "Virgile, Adrien, Mathieu";
     const char* date = "03/04/2023";
-    const char* version = "V3";
+    const char* version = "V4";
     Lecteur _lecteur;
     QLabel *mode;
     QLabel *rang;

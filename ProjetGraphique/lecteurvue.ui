@@ -42,6 +42,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="bLancerDiapo">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Lancer le diaporama</string>
         </property>
@@ -145,6 +148,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="bPrecedent">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Précédent</string>
         </property>
@@ -156,7 +162,7 @@
       <item>
        <widget class="QPushButton" name="bSuivant">
         <property name="enabled">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="text">
          <string>Suivant</string>
@@ -188,6 +194,9 @@
       <string>Paramètres</string>
      </property>
      <addaction name="actionCharger_diaporama"/>
+     <addaction name="actionEnlever_diaporama"/>
+     <addaction name="separator"/>
+     <addaction name="actionVitesse"/>
     </widget>
     <addaction name="menuParam_tres"/>
     <addaction name="separator"/>
@@ -207,15 +216,46 @@
    <property name="text">
     <string>Quitter</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
   </action>
   <action name="actionCharger_diaporama">
    <property name="text">
     <string>Charger diaporama</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
   </action>
   <action name="actionA_propos_de">
    <property name="text">
     <string>A propos de</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="actionEnlever_diaporama">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Enlever diaporama</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionVitesse">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Vitesse</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
    </property>
   </action>
  </widget>

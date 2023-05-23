@@ -25,6 +25,7 @@ LecteurVue::LecteurVue(QWidget *parent)
 
     // Connexion des éléments de l'ui
     connect(ui->actionCharger_diaporama, SIGNAL(triggered()), this, SLOT(chargerDiaporama()));
+    connect(ui->actionEnlever_diaporama, SIGNAL(triggered()), this, SLOT(enleverDiaporama()));
     connect(ui->bArretDiapo, SIGNAL(clicked()), this, SLOT(arreterDiapo()));
     connect(ui->bLancerDiapo, SIGNAL(clicked()), this, SLOT(demarrerDiapo()));
     connect(ui->bSuivant, SIGNAL(clicked()), this, SLOT(suivantClic()));
@@ -43,10 +44,17 @@ void LecteurVue::chargerDiaporama() {
     afficherImageCourante();
     etat = manuel;
     majStatusBar();
+    majBoutonsLabels(true);
+}
+
+void LecteurVue::enleverDiaporama() {
+    _lecteur.changerDiaporama(0);
+    etat = nonCharge;
+    majStatusBar();
+    majBoutonsLabels(false);
 }
 
 void LecteurVue::demarrerDiapo() {
-    ui->bArretDiapo->setEnabled(true);
 
     while (_lecteur.imageCourante()->getRang() != 1)
     {
@@ -54,14 +62,14 @@ void LecteurVue::demarrerDiapo() {
     }
 
     etat = automatique;
-    timer.start();
     majStatusBar();
+    ui->bArretDiapo->setEnabled(false);
+    timer.start();
 }
 
 void LecteurVue::arreterDiapo() {
     ui->bArretDiapo->setEnabled(false);
     etat = manuel;
-    timer.stop();
     majStatusBar();
 }
 
@@ -118,5 +126,25 @@ void LecteurVue::majStatusBar() {
     } else {
         mode->setText("Mode : Automatique");
         rang->setText("Rang: " + QString::number(_lecteur.imageCourante()->getRang()) + "/" + QString::number(_lecteur.nbImages()));
+    }
+
+    if (timer.isActive()) {
+        ui->bArretDiapo->setEnabled(false);
+        timer.stop();
+    }
+}
+
+void LecteurVue::majBoutonsLabels(bool actif) {
+    ui->actionEnlever_diaporama->setEnabled(actif);
+    ui->actionVitesse->setEnabled(actif);
+    ui->bLancerDiapo->setEnabled(actif);
+    ui->bSuivant->setEnabled(actif);
+    ui->bPrecedent->setEnabled(actif);
+
+    if (!actif) {
+        ui->image->clear();
+        ui->titreImage->setText("Titre de l'image");
+        ui->titreDiapo->setText("Titre diaporama");
+        ui->categorie->setText("Catégorie");
     }
 }

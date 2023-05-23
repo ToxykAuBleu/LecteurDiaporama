@@ -32,6 +32,7 @@ private:
 
 public slots:
     void chargerDiaporama(); // Charge le diaporama
+    void enleverDiaporama(); // Enlève le diaporama
     void suivant(); // Affiche l'image suivante dans le diaporama
     void suivantClic();// Affiche l'image suivante dans le diaporama, considérant un clic de l'utilisateur sur "suivant"
     void precedentClic(); // Affiche l'image précedente dans le diaporama, considérant un clic de l'utilisateur sur "précédent"
@@ -39,7 +40,8 @@ public slots:
     void arreterDiapo(); // Passe le diaporama en mode manuel
     void apropos(); //Ouvre boite de dialogue contenant les informations sur le diapo
     void afficherImageCourante(); // Affiche l'image courant du lecteur sur l'interface graphique
-    void majStatusBar(); // Met à jour la status bar de l'application.
+    void majStatusBar(); // Met à jour la status bar de l'application
+    void majBoutonsLabels(bool); // Met à jour les boutons et les labels de l'application
 };
 
 #endif // LECTEURVUE_H

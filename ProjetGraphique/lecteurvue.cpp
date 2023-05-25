@@ -89,6 +89,7 @@ void LecteurVue::arreterDiapo() {
 void LecteurVue::changerVitesse() {
     bool ok;
     int vitesse = QInputDialog::getInt(this, QString("Changer de vitesse"), "Vitesse en ms: ", timer.interval(), 0, 60000, 1, &ok);
+    // On change l'intervalle du timer seulement s'il a cliqué sur le bouton ok.
     if (ok) {
         timer.setInterval(vitesse);
     }
@@ -122,11 +123,13 @@ void LecteurVue::precedentClic() {
 
 void LecteurVue::afficherImageCourante() {
     Image* img = _lecteur.imageCourante();
+    // On récupère les informations nécessaires en lien avec l'affichage de l'image courante
     QString lien = QString::fromStdString(img->getChemin());
-    ui->image->setPixmap(QPixmap(lien));
     QString titre = QString::fromStdString(img->getTitre());
-    ui->titreImage->setText(titre);
     QString categorie = QString::fromStdString(img->getCategorie());
+    // On affiche l'image (avec le lien récupéré précédemment) + titre et catégorie
+    ui->image->setPixmap(QPixmap(lien));
+    ui->titreImage->setText(titre);
     ui->categorie->setText(categorie);
 }
 

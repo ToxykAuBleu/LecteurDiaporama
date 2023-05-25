@@ -55,6 +55,7 @@ void LecteurVue::chargerDiaporama() {
     afficherImageCourante();
     etat = manuel;
     majStatusBar();
+    arreterTimer();
     majBoutonsLabels(true);
 }
 
@@ -62,6 +63,7 @@ void LecteurVue::enleverDiaporama() {
     _lecteur.changerDiaporama(0);
     etat = nonCharge;
     majStatusBar();
+    arreterTimer();
     majBoutonsLabels(false);
 }
 
@@ -81,6 +83,7 @@ void LecteurVue::demarrerDiapo() {
 void LecteurVue::arreterDiapo() {
     etat = manuel;
     majStatusBar();
+    arreterTimer();
 }
 
 void LecteurVue::changerVitesse() {
@@ -94,7 +97,7 @@ void LecteurVue::changerVitesse() {
 void LecteurVue::suivant() {
     _lecteur.avancer();
     afficherImageCourante();
-    rang->setText("Rang: " + QString::number(_lecteur.imageCourante()->getRang()) + "/" + QString::number(_lecteur.nbImages()));
+    majStatusBar();
 }
 
 void LecteurVue::suivantClic() {
@@ -104,6 +107,7 @@ void LecteurVue::suivantClic() {
         etat = manuel;
     }
     majStatusBar();
+    arreterTimer();
 }
 
 void LecteurVue::precedentClic() {
@@ -113,6 +117,7 @@ void LecteurVue::precedentClic() {
         etat = manuel;
     }
     majStatusBar();
+    arreterTimer();
 }
 
 void LecteurVue::afficherImageCourante() {
@@ -143,7 +148,9 @@ void LecteurVue::majStatusBar() {
         mode->setText("Mode : Automatique");
         rang->setText("Rang: " + QString::number(_lecteur.imageCourante()->getRang()) + "/" + QString::number(_lecteur.nbImages()));
     }
+}
 
+void LecteurVue::arreterTimer() {
     if (timer.isActive()) {
         ui->bArretDiapo->setEnabled(false);
         timer.stop();

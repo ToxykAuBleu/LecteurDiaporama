@@ -43,6 +43,7 @@ public slots:
     void afficherImageCourante(); // Affiche l'image courant du lecteur sur l'interface graphique
     void majStatusBar(); // Met à jour la status bar de l'application
     void majBoutonsLabels(bool); // Met à jour les boutons et les labels de l'application
+    void arreterTimer();
 };
 
 #endif // LECTEURVUE_H

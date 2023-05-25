@@ -33,6 +33,7 @@ private:
 public slots:
     void chargerDiaporama(); // Charge le diaporama
     void enleverDiaporama(); // Enlève le diaporama
+    void changerVitesse(); // Ouvre une boite de dialogue pour changer la vitesse du diaporama
     void suivant(); // Affiche l'image suivante dans le diaporama
     void suivantClic();// Affiche l'image suivante dans le diaporama, considérant un clic de l'utilisateur sur "suivant"
     void precedentClic(); // Affiche l'image précedente dans le diaporama, considérant un clic de l'utilisateur sur "précédent"

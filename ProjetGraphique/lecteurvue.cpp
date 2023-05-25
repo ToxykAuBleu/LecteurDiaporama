@@ -3,6 +3,7 @@
 #include "ui_lecteurvue.h"
 #include <QDebug>
 #include <QMessageBox>
+#include <QInputDialog>
 
 LecteurVue::LecteurVue(QWidget *parent)
     : QMainWindow(parent)
@@ -37,6 +38,7 @@ LecteurVue::LecteurVue(QWidget *parent)
     // Connexion des éléments de la bar d'outils
     connect(ui->actionCharger_diaporama, SIGNAL(triggered()), this, SLOT(chargerDiaporama()));
     connect(ui->actionEnlever_diaporama, SIGNAL(triggered()), this, SLOT(enleverDiaporama()));
+    connect(ui->actionVitesse, SIGNAL(triggered()), this, SLOT(changerVitesse()));
     connect(ui->actionA_propos_de, SIGNAL(triggered()), this, SLOT(apropos()));
     connect(ui->actionQuitter, SIGNAL(triggered()), QCoreApplication::instance(), SLOT(quit()), Qt::QueuedConnection);
 
@@ -79,6 +81,14 @@ void LecteurVue::demarrerDiapo() {
 void LecteurVue::arreterDiapo() {
     etat = manuel;
     majStatusBar();
+}
+
+void LecteurVue::changerVitesse() {
+    bool ok;
+    int vitesse = QInputDialog::getInt(this, QString("Changer de vitesse"), "Vitesse en ms: ", timer.interval(), 0, 60000, 1, &ok);
+    if (ok) {
+        timer.setInterval(vitesse);
+    }
 }
 
 void LecteurVue::suivant() {

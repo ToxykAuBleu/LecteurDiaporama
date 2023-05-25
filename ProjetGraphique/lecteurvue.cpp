@@ -9,14 +9,18 @@ LecteurVue::LecteurVue(QWidget *parent)
     , ui(new Ui::LecteurVue)
 {
     ui->setupUi(this);
+
+    // Pour bloquer le redimensionnement de la fenetre.
     this->layout()->setSizeConstraint(QLayout::SetFixedSize);
 
     // StatusBar
     mode = new QLabel();
     rang = new QLabel();
-    majStatusBar();
+    majStatusBar(); // On actualise le contenu de la status bar au démarrage de l'application
+    // On aligne les labels correctement dans la status bar.
     mode->setAlignment(Qt::AlignLeft);
     rang->setAlignment(Qt::AlignRight);
+    // Enfin on les ajoute à la status bar.
     ui->statusbar->addWidget(mode, 1);
     ui->statusbar->addWidget(rang, 0);
 
@@ -24,14 +28,19 @@ LecteurVue::LecteurVue(QWidget *parent)
     timer.setInterval(2000);
 
     // Connexion des éléments de l'ui
-    connect(ui->actionCharger_diaporama, SIGNAL(triggered()), this, SLOT(chargerDiaporama()));
-    connect(ui->actionEnlever_diaporama, SIGNAL(triggered()), this, SLOT(enleverDiaporama()));
+    // Connexion des boutons
     connect(ui->bArretDiapo, SIGNAL(clicked()), this, SLOT(arreterDiapo()));
     connect(ui->bLancerDiapo, SIGNAL(clicked()), this, SLOT(demarrerDiapo()));
     connect(ui->bSuivant, SIGNAL(clicked()), this, SLOT(suivantClic()));
     connect(ui->bPrecedent, SIGNAL(clicked()), this, SLOT(precedentClic()));
+
+    // Connexion des éléments de la bar d'outils
+    connect(ui->actionCharger_diaporama, SIGNAL(triggered()), this, SLOT(chargerDiaporama()));
+    connect(ui->actionEnlever_diaporama, SIGNAL(triggered()), this, SLOT(enleverDiaporama()));
     connect(ui->actionA_propos_de, SIGNAL(triggered()), this, SLOT(apropos()));
     connect(ui->actionQuitter, SIGNAL(triggered()), QCoreApplication::instance(), SLOT(quit()), Qt::QueuedConnection);
+
+    // Connexion du timer pour l'affichage de l'image suivante lors du mode automatique
     connect(&timer, SIGNAL(timeout()), this, SLOT(suivant()));
 }
 
@@ -57,14 +66,14 @@ void LecteurVue::enleverDiaporama() {
 void LecteurVue::demarrerDiapo() {
     ui->bArretDiapo->setEnabled(true);
 
-    while (_lecteur.imageCourante()->getRang() != 1)
-    {
+    // Pour revenir au début du diaporama
+    while (_lecteur.imageCourante()->getRang() != 1) {
         suivant();
     }
 
     etat = automatique;
     majStatusBar();
-    timer.start();
+    timer.start(); // On démare le timer
 }
 
 void LecteurVue::arreterDiapo() {

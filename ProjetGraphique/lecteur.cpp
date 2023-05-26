@@ -1,8 +1,10 @@
 #include "lecteur.h"
+#include <QSqlQuery>
 
 Lecteur::Lecteur()
 {
     _numDiaporamaCourant = 0;   // =  le lecteur est vide
+    mydb = new Database();
 }
 
 void Lecteur::avancer()
@@ -44,12 +46,16 @@ void Lecteur::chargerDiaporama()
        Dans une version ultérieure, ces données proviendront d'une base de données,
        et correspondront au diaporama choisi */
     Image* imageACharger;
-    imageACharger = new Image(1, "chateau", "Chateau Disney", "://cartesDisney/Disney_0.gif");
-    _diaporama.push_back(imageACharger);
-    imageACharger = new Image(2, "animaux", "Les 101 Dalmatiens", "://cartesDisney/Disney_1.gif");
-    _diaporama.push_back(imageACharger);
-    imageACharger = new Image(3, "personne", "Cendrillon", "://cartesDisney/Disney_2.gif");
-    _diaporama.push_back(imageACharger);
+
+    if (mydb->openDatabase()) {
+        QSqlQuery query("SELECT * FROM Diapos");
+
+        for (int i = 0; query.next(); i++) {
+            // qDebug() << query.value(0);
+            imageACharger = new Image(query.value(0).toInt(), query.value(1).toString().toStdString(), query.value(2).toString().toStdString(), "://" + query.value(3).toString().toStdString());
+            _diaporama.push_back(imageACharger);
+        }
+    }
 
     // trier le contenu du diaporama par ordre croissant selon le rang de l'image dans le diaporama
     int n = _diaporama.size();

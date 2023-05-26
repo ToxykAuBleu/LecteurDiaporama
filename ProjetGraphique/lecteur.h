@@ -2,6 +2,7 @@
 #define LECTEUR_H
 #include "image.h"
 #include <vector>
+#include "database.h"
 
 typedef vector<Image*> Diaporama;   // Structure de données contenant les infos sur les images
 
@@ -24,7 +25,8 @@ private:
                                         de l'image courante.
                                         Indéfini quand diaporama vide.
                                         Démarre à 0 quand diaporama non vide */
-private:
+    Database *mydb;
+
     void chargerDiaporama();    // charge dans _diaporama les images du _numDiaporamaCourant
     void viderDiaporama();      // vide _diaporama de tous ses objets image et les delete
 };

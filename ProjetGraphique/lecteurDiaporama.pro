@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     database.cpp \
+    diaporama.cpp \
     image.cpp \
     lecteur.cpp \
     main.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     database.h \
+    diaporama.h \
     image.h \
     lecteur.h \
     lecteurvue.h

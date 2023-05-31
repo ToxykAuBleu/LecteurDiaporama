@@ -25,7 +25,7 @@ private:
                                         de l'image courante.
                                         Indéfini quand diaporama vide.
                                         Démarre à 0 quand diaporama non vide */
-    Database *mydb;
+    Database *mydb;                  // Objet représentant la base de données
 
     void chargerDiaporama();    // charge dans _diaporama les images du _numDiaporamaCourant
     void viderDiaporama();      // vide _diaporama de tous ses objets image et les delete

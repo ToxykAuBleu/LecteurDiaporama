@@ -48,7 +48,9 @@ void Lecteur::chargerDiaporama()
     Image* imageACharger;
 
     if (mydb->openDatabase()) {
-        QSqlQuery query("SELECT * FROM Diapos");
+        QSqlQuery query("SELECT D.idphoto, D.titrePhoto, F.nomFamille, D.uriPhoto\
+                         FROM Diapos D\
+                         JOIN Familles F ON D.idFam = F.idFamille;");
 
         for (int i = 0; query.next(); i++) {
             // qDebug() << query.value(0);

@@ -22,7 +22,7 @@ private:
     Ui::LecteurVue *ui;
     const char* auteurs = "Virgile, Adrien, Mathieu";
     const char* date = "03/04/2023"; // Correspond à la date de création du projet
-    const char* version = "V4"; // Correspond à la version actuel du projet
+    const char* version = "V5"; // Correspond à la version actuel du projet
     Lecteur _lecteur; // Correspond au lecteur du programme
     QLabel *mode; // Label affichant dans la status bar l'état du lecteur
     QLabel *rang; // Label affichant dans la status bar le rang de l'image courante

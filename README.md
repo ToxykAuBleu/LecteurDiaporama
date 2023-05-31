@@ -9,6 +9,6 @@ Un fichier compressé dénommé 'cartesDisney.zip' (situé dans ProjetGraphique)
 Il est nécessaire de le décompresser dans ce même dossier pour que le projet fonctionne correctement.
 
 ## Auteurs du projet
-- Mathieu F (TD1 - TP2)
+- Mathieu F (TD1 - TP2) (ToxykAuBleu)
 - Virgile E (TD1 - TP2)
-- Adrien H (TD1 - TP2)
+- Adrien H (TD1 - TP2) (Alakamar)
